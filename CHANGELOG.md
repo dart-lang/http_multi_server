@@ -1,3 +1,7 @@
+## 2.2.0
+
+- Add `HttpMultiServer.bindSecure` to match `HttpMultiServer.bind`.
+
 ## 2.1.0
 
 - Add `HttpMultiServer.bind` static which centralizes logic around common local
