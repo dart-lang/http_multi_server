@@ -247,60 +247,60 @@ void main() {
     });
   });
 
-  group("HttpMultiServer.bindSecure", () {
-    test("listens on all localhost interfaces for 'localhost'", () async {
+  group('HttpMultiServer.bindSecure', () {
+    test('listens on all localhost interfaces for "localhost"', () async {
       final server = await HttpMultiServer.bindSecure(
-          "localhost", 0, SecurityContext.defaultContext);
+          'localhost', 0, SecurityContext.defaultContext);
       server.listen((request) {
-        request.response.write("got request");
+        request.response.write('got request');
         request.response.close();
       });
 
       if (await supportsIPv4) {
-        expect(http.read("https://127.0.0.1:${server.port}/"),
-            completion(equals("got request")));
+        expect(http.read(Uri.https('127.0.0.1:${server.port}', '')),
+            completion(equals('got request')));
       }
 
       if (await supportsIPv6) {
-        expect(http.read("https://[::1]:${server.port}/"),
-            completion(equals("got request")));
+        expect(http.read(Uri.https('[::1]:${server.port}', '')),
+            completion(equals('got request')));
       }
     });
 
-    test("listens on all localhost interfaces for 'any'", () async {
+    test('listens on all localhost interfaces for "any"', () async {
       final server = await HttpMultiServer.bindSecure(
-          "any", 0, SecurityContext.defaultContext);
+          'any', 0, SecurityContext.defaultContext);
       server.listen((request) {
-        request.response.write("got request");
+        request.response.write('got request');
         request.response.close();
       });
 
       if (await supportsIPv4) {
-        expect(http.read("https://127.0.0.1:${server.port}/"),
-            completion(equals("got request")));
+        expect(http.read(Uri.https('127.0.0.1:${server.port}', '')),
+            completion(equals('got request')));
       }
 
       if (await supportsIPv6) {
-        expect(http.read("https://[::1]:${server.port}/"),
-            completion(equals("got request")));
+        expect(http.read(Uri.https('[::1]:${server.port}', '')),
+            completion(equals('got request')));
       }
     });
 
-    test("listens on specified hostname", () async {
+    test('listens on specified hostname', () async {
       final server = await HttpMultiServer.bindSecure(
           InternetAddress.anyIPv4, 0, SecurityContext.defaultContext);
       server.listen((request) {
-        request.response.write("got request");
+        request.response.write('got request');
         request.response.close();
       });
 
       if (await supportsIPv4) {
-        expect(http.read("https://127.0.0.1:${server.port}/"),
-            completion(equals("got request")));
+        expect(http.read(Uri.https('127.0.0.1:${server.port}', '')),
+            completion(equals('got request')));
       }
 
       if (await supportsIPv6) {
-        expect(http.read("https://[::1]:${server.port}/"),
+        expect(http.read(Uri.https('[::1]:${server.port}', '')),
             throwsA(isA<SocketException>()));
       }
     });
