@@ -94,9 +94,9 @@ class MultiHeaders implements HttpHeaders {
   MultiHeaders(Iterable<HttpHeaders> headers) : _headers = headers.toSet();
 
   @override
-  void add(String name, Object value) {
+  void add(String name, Object value, {bool preserveHeaderCase = false}) {
     for (var headers in _headers) {
-      headers.add(name, value);
+      headers.add(name, value, preserveHeaderCase: preserveHeaderCase);
     }
   }
 
@@ -126,9 +126,9 @@ class MultiHeaders implements HttpHeaders {
   }
 
   @override
-  void set(String name, Object value) {
+  void set(String name, Object value, {bool preserveHeaderCase = false}) {
     for (var headers in _headers) {
-      headers.set(name, value);
+      headers.set(name, value, preserveHeaderCase: preserveHeaderCase);
     }
   }
 
