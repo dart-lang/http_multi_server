@@ -166,24 +166,32 @@ class HttpMultiServer extends StreamView<HttpRequest> implements HttpServer {
   /// Bind a secure [HttpServer] with handling for special addresses 'localhost'
   /// and 'any'.
   ///
-  /// For address 'localhost' behaves like [loopback]. For 'any' listens on
-  /// [InternetAddress.anyIPv6] which listens on all hostnames for both IPv4 and
-  /// IPV6. For any other address forwards directly to `HttpServer.bindSecure`
-  /// where the IPvX support may vary.
+  /// For address 'localhost' behaves like [loopback].
+  ///
+  /// For 'any' listens on [InternetAddress.anyIPv6] if the system supports IPv6
+  /// otherwise [InternetAddress.anyIPv4]. Note [InternetAddress.anyIPv6]
+  /// listens on all hostnames for both IPv4 and IPv6.
   ///
   /// See [HttpServer.bindSecure].
   static Future<HttpServer> bindSecure(
       dynamic address, int port, SecurityContext context,
-      {int backlog = 0, bool v6Only = false, bool shared = false}) {
+      {int backlog = 0, bool v6Only = false, bool shared = false}) async {
     if (address == 'localhost') {
-      return HttpMultiServer.loopbackSecure(port, context,
+      return await HttpMultiServer.loopbackSecure(port, context,
           backlog: backlog, v6Only: v6Only, shared: shared);
     }
     if (address == 'any') {
-      return HttpServer.bindSecure(InternetAddress.anyIPv6, port, context,
-          backlog: backlog, v6Only: v6Only, shared: shared);
+      return await HttpServer.bindSecure(
+          await supportsIPv6
+              ? InternetAddress.anyIPv6
+              : InternetAddress.anyIPv4,
+          port,
+          context,
+          backlog: backlog,
+          v6Only: v6Only,
+          shared: shared);
     }
-    return HttpServer.bindSecure(address, port, context,
+    return await HttpServer.bindSecure(address, port, context,
         backlog: backlog, v6Only: v6Only, shared: shared);
   }
 
