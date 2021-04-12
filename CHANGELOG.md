@@ -1,14 +1,27 @@
+## 3.1.0
+
+* Fix an issue where `bind` would bind to the `anyIPv6` address in unsupported
+  environments.
+* Add `HttpMultiServer.bindSecure` to match `HttpMultiServer.bind`.
+
+## 3.0.0
+
+* Migrate to null safety.
+
 ## 2.2.0
 
-- Add `HttpMultiServer.bindSecure` to match `HttpMultiServer.bind`.
+* Preparation for [HttpHeaders change]. Update signature of `MultiHeaders.add()`
+  and `MultiHeaders.set()` to match new signature of `HttpHeaders`. The
+  parameter is not yet forwarded and will not behave as expected.
+
+  [HttpHeaders change]: https://github.com/dart-lang/sdk/issues/39657
 
 ## 2.1.0
 
-- Add `HttpMultiServer.bind` static which centralizes logic around common local
+* Add `HttpMultiServer.bind` static which centralizes logic around common local
   serving scenarios - handling a more flexible 'localhost' and listening on
   'any' hostname.
-- Update SDK constraints to `>=2.1.0 <3.0.0`.
-
+* Update SDK constraints to `>=2.1.0 <3.0.0`.
 
 ## 2.0.6
 
@@ -81,4 +94,4 @@
   particular, this works around [issue 19815][] on some Windows machines where
   IPv6 failure isn't discovered until we try to connect to the socket.
 
-[issue 19815]: http://code.google.com/p/dart/issues/detail?id=19815
+[issue 19815]: https://code.google.com/p/dart/issues/detail?id=19815
