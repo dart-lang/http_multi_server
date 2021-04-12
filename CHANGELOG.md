@@ -1,8 +1,11 @@
 ## 3.1.0
 
+* Add `HttpMultiServer.bindSecure` to match `HttpMultiServer.bind`.
+
+## 3.0.1
+
 * Fix an issue where `bind` would bind to the `anyIPv6` address in unsupported
   environments.
-* Add `HttpMultiServer.bindSecure` to match `HttpMultiServer.bind`.
 
 ## 3.0.0
 
