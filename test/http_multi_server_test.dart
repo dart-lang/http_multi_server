@@ -296,26 +296,18 @@ void main() {
     });
 
     test('listens on specified hostname', () async {
-      if (await supportsIPv4) {
-        final server = await HttpMultiServer.bindSecure(
-            InternetAddress.anyIPv4, 0, context);
-        server.listen((request) {
-          request.response.write('got request');
-          request.response.close();
-        });
+      if (!await supportsIPv4) return;
+      final server =
+          await HttpMultiServer.bindSecure(InternetAddress.anyIPv4, 0, context);
+      server.listen((request) {
+        request.response.write('got request');
+        request.response.close();
+      });
 
-        expect(client.read(Uri.https('127.0.0.1:${server.port}', '')),
-            completion(equals('got request')));
-      }
+      expect(client.read(Uri.https('127.0.0.1:${server.port}', '')),
+          completion(equals('got request')));
 
       if (await supportsIPv6) {
-        final server = await HttpMultiServer.bindSecure(
-            InternetAddress.anyIPv6, 0, context);
-        server.listen((request) {
-          request.response.write('got request');
-          request.response.close();
-        });
-
         expect(client.read(Uri.https('[::1]:${server.port}', '')),
             throwsA(isA<SocketException>()));
       }
